@@ -1,0 +1,2 @@
+# kattis
+Kattis exercise
