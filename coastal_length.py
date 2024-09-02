@@ -2,11 +2,15 @@
 
 from dataclasses import dataclass, field
 from pprint import pprint
+from collections import deque
+
+DEBUG   = True
 
 @dataclass
 class Coastal:
     map: list[list[str]] = field(default_factory=list)
     queue: list[tuple[int, int]] = field(default_factory=list)
+    # queue: deque = field(default_factory=deque, init=False)
     count: int = 0
 
     def __post_init__(self):
@@ -27,7 +31,7 @@ class Coastal:
     
     def floodfill_sea_dfs(self) -> None:
         dir = [(0, -1), (-1, 0), (0, 1), (1, 0)]
-        def dfs(r, c):
+        def dfs(r: int, c: int) -> None:
             if r < 0 or r > self.row or c < 0 or c > self.col or self.map[r][c] == '~':
                 return
             # for debug
@@ -46,10 +50,18 @@ class Coastal:
 
     def floodfill_sea_bfs(self) -> None:
         dir = [(0, -1), (-1, 0), (0, 1), (1, 0)]
-        while len(self.queue):
+        while self.queue:
+        # while len(self.queue):
             # for debug
             # print(self.queue)
+
+            # if bfs_iterative
             y, x = self.queue.pop(0)
+            # y, x = self.queue.popleft()
+
+            # if dfs_iterative
+            # y, x = self.queue.pop()
+
             self.map[y][x] = '~'
             for dy, dx in dir:
                 ny, nx = y + dy, x + dx
@@ -81,9 +93,9 @@ class Coastal:
         for y, x in starts:
             self.queue.append((y, x))
 
-        # for debug 
-        print('-'*50, "[starting queue]")
-        print(self.queue)
+        if DEBUG:
+            print('-'*50, "[starting queue]")
+            print(self.queue)
 
         return self.floodfill_sea_bfs()
     
@@ -154,10 +166,12 @@ def main() -> None:
     
     coastal = Coastal(map = lines)
 
-    print('-'*50, "[costal length]")
+    if DEBUG:
+        print('-'*50, "[costal length]")
     print(coastal.count)
-    print('-'*50, "[map]")
-    pprint(coastal.map)
+    if DEBUG:
+        print('-'*50, "[map]")
+        pprint(coastal.map)
 
 if __name__ == "__main__":
     main()
