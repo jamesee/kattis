@@ -2,6 +2,7 @@
 
 from pprint import pprint
 from dataclasses import dataclass, field
+from typing import Self
 
 DEBUG = True
 
@@ -68,38 +69,37 @@ class Rot:
             self.rotate -= 45
         return
 
-
-def parse_inputs() -> tuple[int, list[list[str]]]:
-    n, m = input().strip().split()
-    n = int(n)
-    lines = list()
-    while n:
+    @classmethod
+    def parse_inputs(cls) -> Self:
+        n, m = input().strip().split()
+        n = int(n)
+        lines = list()
+        while n:
+            try:
+                line = input().strip()
+                if len(line) != int(m):
+                    raise TypeError(f"TypeError: Length of string must be {m}.")
+                line = list(line)
+                lines.append(line)
+                n -= 1
+            except TypeError as e:
+                print(f"Error: {e}")
+                return None
         try:
-            line = input().strip()
-            if len(line) != int(m):
-                raise TypeError(f"TypeError: Length of string must be {m}.")
-            line = list(line)
-            lines.append(line)
-            n -= 1
-        except TypeError as e:
+            rotate = int(input().strip())
+            if rotate % 45 != 0:
+                raise ValueError("rotate angle must be multiple of 45 [degrees].")
+        except ValueError as e:
             print(f"Error: {e}")
-            return None, None
-    try:
-        rotate = int(input().strip())
-        if rotate % 45 != 0:
-            raise ValueError("rotate angle must be multiple of 45 [degrees].")
-    except ValueError as e:
-        print(f"Error: {e}")
-        return None, None
-    return int(rotate), lines
+            return None
+        return cls(rotate=rotate, data=lines)
 
 def main() -> None:
 
-    rotate, data = parse_inputs()
-    if not rotate and not data:
+    table = Rot.parse_inputs()
+    if not table:
         return
 
-    table = Rot(rotate=rotate, data=data)
     if DEBUG:
         print('-'*38, '[self.data@main]')
         print(table.rotated)
