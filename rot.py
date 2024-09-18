@@ -22,17 +22,13 @@ class Rot:
         row, col = len(self.data), len(self.data[0])
         nrow = row + col - 1
         ncol = nrow
-        ndata = list()
-        for r in range(nrow):
-            temp_lst = list()
-            for c in range(ncol):
-                temp_lst.append(' ')
-            ndata.append(temp_lst)
+
+        ndata =[[' ' for _ in range(ncol)] for _ in range(nrow)]
 
         for r in range(row):
             for c in range(col):
                 ndata[r + c][c - r + row - 1] = self.data[r][c]
-
+        
         self.data = ndata
 
         self.rotated += 45
@@ -44,20 +40,24 @@ class Rot:
             pprint(self.data)      
         return
     
+    # def trim_data(self) -> None:
+    #     ndata = list()
+    #     while self.data:
+    #         row = self.data.pop(0)
+    #         temp_lst = list()
+    #         while row:
+    #             ch = row.pop(0)
+    #             if ch != ' ':
+    #                 temp_lst.append(ch)
+    #         if temp_lst != []:
+    #             ndata.append(''.join(temp_lst))
+    #     self.data = ndata
+    #     return
+
     def trim_data(self) -> None:
-        ndata = list()
-        while self.data:
-            row = self.data.pop(0)
-            temp_lst = list()
-            while row:
-                ch = row.pop(0)
-                if ch != ' ':
-                    temp_lst.append(ch)
-            if temp_lst != []:
-                ndata.append(''.join(temp_lst))
-        self.data = ndata
+        self.data = [ [element for element in row if element != ' '] for row in self.data if any(element != ' ' for element in row)]
         return
-    
+        
     def print_data(self) -> None:
         for row in self.data:
             print(''.join(row))
@@ -105,7 +105,7 @@ def main() -> None:
         print(table.rotated)
         pprint(table.data)
         print('-'*38, '[output]')
-    table.print_data()
+    return table.print_data()
 
 
 
