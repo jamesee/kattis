@@ -1,4 +1,4 @@
 # kattis
-Kattis exercise
+Kattis exercises
 
 ![kattislist](./img/kattis.png)
