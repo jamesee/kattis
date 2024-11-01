@@ -19,7 +19,21 @@ def PDMap_bruteforce(row: int,col: int,sites: list[list[int]]) -> list[list[int]
     return list(list(fill_map([r,c], sites) for c in range(col)) for r in range(row))
 
 #=======================================================================[floodfill method ver1]
-# working
+'''
+working code but inefficient
+
+pseudocode:
+1.  use the sites to floodfill with its index number. 
+    If the sites can floodfill simultanenously, theotically we can get the equidistant boundary when each floodfill meet
+
+2.  as we do floodfill of each site in sequence, the lower indexed site will encrouch into other's region
+
+3.  do 2 floodfill maps in opposite sequence of sites. 
+
+4.  Find the region where the 2 maps are different, then calculate the euclidean distant of the different pixels.
+
+'''
+
 
 def floodfil(row: int,col: int,sites: list[list[int,int,int]]) -> list[list[int]]:
     mymap = [['' for _ in range(col)] for _ in range(row)]
@@ -71,7 +85,24 @@ def PDMap_floodfill_ver1(row: int,col: int,sites: list[list[int]]) -> list[list[
     return map1
 
 #=======================================================================[floodfill method ver2]
-# not working
+'''
+not working yet, debugging
+
+
+pseudocode:
+
+1.  create 2 maps. sitemap and distmap (to store the minimum distance)
+
+2.  store the coordinate, index and distance as (r, c, index, distance) when doing floodfill
+    distance is the distance from the site[index]
+
+3.  evaluate each pixel for:
+    i.  if not visited before, fill the sitemap and distmap immediately
+    ii. if visited before, 
+            if newdist < distmap[nr][nc], then distmap[nr][nc] = newdist and sitemap[nr][nc] = index
+            if newdist < distmap[nr][nc], then sitemap[nr][nc] = 'X'
+
+'''
 
 def PDMap_floodfill_ver2(row: int, col: int, sites: list[list[int, int]]) -> list[list[int, int]]:
 
