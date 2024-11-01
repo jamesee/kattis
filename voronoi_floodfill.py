@@ -68,7 +68,7 @@ def diff_maps(map1: list[list[int]], map2: list[list[int]]) -> list[tuple[int,in
 def PDMap_floodfill_ver1(row: int,col: int,sites: list[list[int]]) -> list[list[int]]:
 
     mysites = [(*site, index) for index, site in enumerate(sites)]
-    mysites_reverse = [(*site,len(site) - i) for i, site in enumerate(sites[::-1])]
+    mysites_reverse = [(*site,len(sites) - i) for i, site in enumerate(sites[::-1])]
 
     map1 = floodfil(row, col, mysites)
     map2 = floodfil(row, col, mysites_reverse)
