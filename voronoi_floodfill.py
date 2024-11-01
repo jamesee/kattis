@@ -100,7 +100,7 @@ pseudocode:
     i.  if not visited before, fill the sitemap and distmap immediately
     ii. if visited before, 
             if newdist < distmap[nr][nc], then distmap[nr][nc] = newdist and sitemap[nr][nc] = index
-            if newdist < distmap[nr][nc], then sitemap[nr][nc] = 'X'
+            if newdist == distmap[nr][nc], then sitemap[nr][nc] = 'X'
 
 '''
 
